@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 fileprivate var containerView: UIView! // nothing can access it unless it's in this file
 // this is to get around creating a variable for this extension
@@ -19,6 +20,12 @@ extension UIViewController {
             alertVC.modalTransitionStyle = .crossDissolve // fades in
             self.present(alertVC, animated: true)
         }
+    }
+    
+    func presentSafariVC(url: URL) {
+        let safariVC = SFSafariViewController(url: url)
+        safariVC.preferredControlTintColor = .systemGreen
+        present(safariVC, animated: true)
     }
     
     func showLoadingView() {
