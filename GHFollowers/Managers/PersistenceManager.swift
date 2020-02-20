@@ -8,11 +8,44 @@
 
 import Foundation
 
+enum PersistenceActionType {
+    case add, remove
+}
+
+
+
 enum PersistenceManager {
     static private let defaults = UserDefaults.standard
 
     enum Keys {
         static let favorites = "favorites"
+    }
+    
+    static func updateWith(favorite: Follower, actionType: PersistenceActionType, completed: @escaping (GFError?) -> Void) {
+        retrieveFavorites { result in
+            switch result{
+            case .success(let favorites):
+                var retrievedFavorites = favorites
+                
+                // action type will be determined by the user
+                switch actionType {
+                case .add:
+                    guard !retrievedFavorites.contains(favorite) else {
+                        completed(.alreadyInFavorites)
+                        return
+                    }
+                    retrievedFavorites.append(favorite)
+                case .remove:
+                    // when you find a case where the favorite matches the login, remove it
+                    retrievedFavorites.removeAll { $0.login == favorite.login }
+                }
+                
+                completed(save(favorites: favorites))
+                
+            case .failure(let error):
+                completed(error)
+            }
+        }
     }
     // any time you're saving a custom object, you have to encode and decode it. it gets saved as data
     // if it's a default type, then user defaults can hold it no problem
@@ -30,6 +63,18 @@ enum PersistenceManager {
             completed(.success(favorites))
         } catch {
             completed(.failure(.unableToFavorite))
+        }
+    }
+    
+    static func save(favorites: [Follower]) -> GFError? {
+        do {
+            let encoder = JSONEncoder()
+            let encodedFavorites = try encoder.encode(favorites)
+            
+            defaults.set(encodedFavorites, forKey: Keys.favorites)
+            return nil
+        } catch {
+            return .unableToFavorite
         }
     }
 }
