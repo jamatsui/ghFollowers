@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol UserInfoVCDelegate: AnyObject {
+    func didTapGithubProfile()
+    func didTapGetFollowers()
+}
+
 class UserInfoVC: UIViewController {
 
     let headerView = UIView()
@@ -39,17 +44,25 @@ class UserInfoVC: UIViewController {
             guard let self = self else { return }
             switch result {
             case .success(let user):
-                DispatchQueue.main.async {
-                    self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
-                    self.add(childVC: GFRepoItemVC(user: user), to: self.itemViewOne)
-                    self.add(childVC: GFFollowerItemVC(user: user), to: self.itemViewTwo)
-                    self.dateLabel.text = "GitHub since " + user.createdAt.convertToDisplayFormat()
-                }
-                
+                DispatchQueue.main.async { self.configureUIElements(with: user) }
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "something went wrong", message: error.rawValue, buttonTitle: "ok")
             }
         }
+    }
+    
+    func configureUIElements(with user: User) {
+        // declares the delegates before adding the view
+        let repoItemVC = GFRepoItemVC(user: user)
+        repoItemVC.delegate = self
+        
+        let followerItemVC = GFFollowerItemVC(user: user)
+        followerItemVC.delegate = self
+        
+        self.add(childVC: repoItemVC, to: self.itemViewOne)
+        self.add(childVC: followerItemVC, to: self.itemViewTwo)
+        self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
+        self.dateLabel.text = "GitHub since " + user.createdAt.convertToDisplayFormat()
     }
     
     func layoutUI() {
@@ -96,4 +109,18 @@ class UserInfoVC: UIViewController {
     @objc func dismissVC() {
         dismiss(animated: true)
     }
+}
+
+extension UserInfoVC: UserInfoVCDelegate {
+    func didTapGithubProfile() {
+        // show safari vc
+        print("my button was tapped")
+    }
+    
+    func didTapGetFollowers() {
+        // dimiss vc
+        // tell follower list screen the new user
+    }
+    
+    
 }
