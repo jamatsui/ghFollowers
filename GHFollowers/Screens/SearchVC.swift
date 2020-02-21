@@ -28,6 +28,7 @@ class SearchVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        usernameTextField.text = ""
         navigationController?.setNavigationBarHidden(true, animated: true) // shows animation instead of just hiding it
     }
     
@@ -84,9 +85,10 @@ class SearchVC: UIViewController {
             presentGFAlertOnMainThread(title: "Emtpy username", message: "Please enter a username. We need to know who to look for", buttonTitle: "Ok")
             return
         }
-        let followersVC = FollowerListVC()
-        followersVC.username = usernameTextField.text
-        followersVC.title = usernameTextField.text
+        
+        usernameTextField.resignFirstResponder()
+        
+        let followersVC = FollowerListVC(username: usernameTextField.text!)
         navigationController?.pushViewController(followersVC, animated: true)
     }
 }
