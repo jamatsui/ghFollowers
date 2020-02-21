@@ -20,6 +20,8 @@ class SearchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        view.addSubviews(logoImageView, usernameTextField, callToAction)
+
         configureLogoImageView()
         configureTextField()
         configureCallToActionBtn()
@@ -33,7 +35,6 @@ class SearchVC: UIViewController {
     }
     
     func configureLogoImageView() {
-        view.addSubview(logoImageView)
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         logoImageView.image = Images.ghLogo // stringly typed
         let topConstraintConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? 20 : 80
@@ -50,8 +51,6 @@ class SearchVC: UIViewController {
     }
     
     func configureTextField() {
-        view.addSubview(usernameTextField)
-        
         usernameTextField.delegate = self
         
         NSLayoutConstraint.activate([
@@ -63,8 +62,6 @@ class SearchVC: UIViewController {
     }
     
     func configureCallToActionBtn() {
-        view.addSubview(callToAction)
-        
         callToAction.addTarget(self, action: #selector(pushFollowerListVC), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
