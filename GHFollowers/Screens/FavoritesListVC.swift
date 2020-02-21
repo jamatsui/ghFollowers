@@ -40,6 +40,7 @@ class FavoritesListVC: GFDataLoadingVC {
         tableView.dataSource = self
         
         tableView.register(FavoriteCell.self, forCellReuseIdentifier: FavoriteCell.reuseID)
+        tableView.removeExcessCells()
     }
     
     func getFavorites() {
