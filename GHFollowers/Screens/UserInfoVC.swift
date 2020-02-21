@@ -8,11 +8,6 @@
 
 import UIKit
 
-protocol UserInfoVCDelegate: AnyObject {
-    func didTapGithubProfile(for user: User)
-    func didTapGetFollowers(for user: User)
-}
-
 class UserInfoVC: GFDataLoadingVC {
 
     let headerView = UIView()
@@ -112,7 +107,7 @@ class UserInfoVC: GFDataLoadingVC {
     }
 }
 
-extension UserInfoVC: UserInfoVCDelegate {
+extension UserInfoVC: ItemInfoVCDelegate {
     func didTapGithubProfile(for user: User) {
         // show safari vc
         guard let url = URL(string: user.htmlUrl) else {
