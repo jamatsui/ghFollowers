@@ -54,38 +54,38 @@ class NetworkManager {
     }
     
     func getUserInfo(for username: String, completed: @escaping (Result<User, GFError>) -> Void) {
-           let endPoint = baseURL + "\(username)"
-           
-           guard let url = URL(string: endPoint) else {
-               completed(Result.failure(.invalidUsername))
-               return
-           }
-           
-           let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-               if let _ = error {
-                   completed(Result.failure(.unableToComplete))
-               }
-               
-               guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                   completed(Result.failure(.invalidResponse))
-                   return
-               }
-               
-               guard let data = data else {
-                   completed(Result.failure(.invalidData))
-                   return
-               }
-               
-               do {
-                   let decoder = JSONDecoder()
-                   decoder.keyDecodingStrategy = .convertFromSnakeCase // specifies the type of decoding
+        let endPoint = baseURL + "\(username)"
+        
+        guard let url = URL(string: endPoint) else {
+            completed(Result.failure(.invalidUsername))
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let _ = error {
+                completed(Result.failure(.unableToComplete))
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                completed(Result.failure(.invalidResponse))
+                return
+            }
+            
+            guard let data = data else {
+                completed(Result.failure(.invalidData))
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase // specifies the type of decoding
                 decoder.dateDecodingStrategy = .iso8601
-                   let user = try decoder.decode(User.self, from: data)
-                   completed(Result.success(user))
-               } catch {
-                   completed(Result.failure(.invalidData))
-               }
-           }
-           task.resume()
-       }
+                let user = try decoder.decode(User.self, from: data)
+                completed(Result.success(user))
+            } catch {
+                completed(Result.failure(.invalidData))
+            }
+        }
+        task.resume()
+    }
 }
