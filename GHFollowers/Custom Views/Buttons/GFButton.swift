@@ -12,6 +12,7 @@ class GFButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configure()
     }
     
     // only useful if initializing via storyboard, but still required
@@ -19,11 +20,10 @@ class GFButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(backgroundColor: UIColor, title: String) {
-        super.init(frame: .zero) // since using autolayout, ok to set up as zero
+    convenience init(backgroundColor: UIColor, title: String) {
+        self.init(frame: .zero) // since using autolayout, ok to set up as zero
         self.backgroundColor = backgroundColor
         self.setTitle(title, for: .normal)
-        configure()
     }
     
     private func configure() {
@@ -36,7 +36,6 @@ class GFButton: UIButton {
     
     /// can be used to change individual elements for this subclassed button
     func set(backgroundColor: UIColor, title: String) {
-        configure()
         self.backgroundColor = backgroundColor
         setTitle(title, for: .normal)
     }
