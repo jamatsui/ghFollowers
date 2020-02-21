@@ -40,7 +40,6 @@ class GFAlertVC: UIViewController {
         // Do any additional setup after loading the view.
         configureContainerView()
         configureTitleLabel()
-        configureTitleLabel()
         configureActionButton()
         configureMessageLabel()
     }
