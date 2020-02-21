@@ -111,7 +111,7 @@ class UserInfoVC: GFDataLoadingVC {
     }
 }
 
-extension UserInfoVC: ItemInfoVCDelegate {
+extension UserInfoVC: GFRepoItemVCVCDelegate {
     func didTapGithubProfile(for user: User) {
         // show safari vc
         guard let url = URL(string: user.htmlUrl) else {
@@ -120,7 +120,9 @@ extension UserInfoVC: ItemInfoVCDelegate {
         }
         presentSafariVC(url: url)
     }
-    
+}
+
+extension UserInfoVC: GFFollowerItemVCDelegate {
     func didTapGetFollowers(for user: User) {
         guard user.followers != 0 else {
             presentGFAlertOnMainThread(title: "No followers", message: "This user has no followers", buttonTitle: "Ok")
@@ -131,3 +133,4 @@ extension UserInfoVC: ItemInfoVCDelegate {
         dismissVC()
     }
 }
+

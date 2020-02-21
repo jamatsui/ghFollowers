@@ -8,11 +8,6 @@
 
 import UIKit
 
-protocol ItemInfoVCDelegate: AnyObject {
-    func didTapGithubProfile(for user: User)
-    func didTapGetFollowers(for user: User)
-}
-
 class GFItemInfoVC: UIViewController {
 
     let stackView = UIStackView()
@@ -21,7 +16,6 @@ class GFItemInfoVC: UIViewController {
     let actionButton = GFButton() // generic version - no background color. will subclass it later
     
     var user: User!
-    weak var delegate: ItemInfoVCDelegate!
     
     init(user: User) {
         super.init(nibName: nil, bundle: nil)
