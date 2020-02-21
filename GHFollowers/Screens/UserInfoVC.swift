@@ -53,11 +53,8 @@ class UserInfoVC: GFDataLoadingVC {
     
     func configureUIElements(with user: User) {
         // declares the delegates before adding the view
-        let repoItemVC = GFRepoItemVC(user: user)
-        repoItemVC.delegate = self
-        
-        let followerItemVC = GFFollowerItemVC(user: user)
-        followerItemVC.delegate = self
+        let repoItemVC = GFRepoItemVC(user: user, delegate: self)
+        let followerItemVC = GFFollowerItemVC(user: user, delegate: self)
         
         self.add(childVC: repoItemVC, to: self.itemViewOne)
         self.add(childVC: followerItemVC, to: self.itemViewTwo)
