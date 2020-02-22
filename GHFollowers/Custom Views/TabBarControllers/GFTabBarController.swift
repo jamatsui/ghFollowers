@@ -12,7 +12,7 @@ class GFTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        UITabBar.appearance().tintColor = .systemGreen // will handle every tab bar in the app, but ok since it's the only tab bar
+        UITabBar.appearance().tintColor = .systemTeal // will handle every tab bar in the app, but ok since it's the only tab bar
         viewControllers = [createSearchNC(), createFavoritesNC()]
     }
     
