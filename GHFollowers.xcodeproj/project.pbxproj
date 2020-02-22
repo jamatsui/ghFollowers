@@ -276,9 +276,9 @@
 		96DD3E9623DA170E00B44E60 /* GHFollowers */ = {
 			isa = PBXGroup;
 			children = (
-				963DABD823DA703A0066A663 /* Extensions */,
 				9677F83C23E35DAC00BB5718 /* Utilities */,
 				9677F83923E351EE00BB5718 /* Managers */,
+				963DABD823DA703A0066A663 /* Extensions */,
 				9677F83423E34AF500BB5718 /* Model */,
 				963DABD923DA704E0066A663 /* Support */,
 				963DABD723DA6FF80066A663 /* Custom Views */,
